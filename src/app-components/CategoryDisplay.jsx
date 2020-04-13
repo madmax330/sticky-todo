@@ -34,13 +34,17 @@ class CategoryDisplay extends Component {
         super(props);
 
         this.state = {
-            completed: false
+            completed: false,
+            show: this.props.show
         }
     }
 
     showCompleted = () => {
-        let show = this.state.completed;
-        this.setState({completed: !show});
+        this.setState({completed: !this.state.completed});
+    };
+
+    show = () => {
+        this.setState({show: !this.state.show});
     };
 
     moreClicked = item => {
@@ -150,50 +154,58 @@ class CategoryDisplay extends Component {
                             }} style={{marginLeft: '16px'}}>
                                 New todo
                             </Button>
+                            <Button color={this.props.category.color} size="sm" round onClick={this.show}
+                                    style={{marginLeft: '16px'}}>
+                                {this.state.show ? "Hide" : 'Show'}
+                            </Button>
                         </h3>
                     </CardHeader>
                     <CardBody>
-                        <GridContainer>
-                            <GridItem xs={12}>
+                        {this.state.show ? (
+                            <div>
+                                <GridContainer>
+                                    <GridItem xs={12}>
                                 <span style={{marginRight: '32px'}}>
                                     Todos <Muted>({this.props.todos.length})</Muted>
                                 </span>
-                                <span>
+                                        <span>
                                     <Success>Completed <Muted>({this.props.completed.length})</Muted></Success>
                                 </span>
-                                <Button color="secondary" onClick={() => {
-                                    this.showCompleted()
-                                }} className={classes.floatRight}>
-                                    {this.state.completed ? "Hide completed" : "Show completed"}
-                                </Button>
-                            </GridItem>
-                        </GridContainer>
-                        <Table
-                            tableData={this.renderTodos()}
-                            customCellClasses={[
-                                classes.actionsTd,
-                            ]}
-                            customClassesForCells={[1]}
-                        />
-                        {
-                            this.state.completed ? (
-                                <div>
-                                    <h4>Completed <Muted>({this.props.completed.length})</Muted></h4>
-                                    <Table
-                                        tableHead={[
-                                            'Todo',
-                                            'Completed at',
-                                            'Un-complete'
-                                        ]}
-                                        tableData={this.renderComplete()}
-                                        customCellClasses={[
-                                            classes.textRight
-                                        ]}
-                                        customClassesForCells={[2]}
-                                    />
-                                </div>
-                            ) : null
-                        }
+                                        <Button color="secondary" onClick={() => {
+                                            this.showCompleted()
+                                        }} className={classes.floatRight}>
+                                            {this.state.completed ? "Hide completed" : "Show completed"}
+                                        </Button>
+                                    </GridItem>
+                                </GridContainer>
+                                <Table
+                                    tableData={this.renderTodos()}
+                                    customCellClasses={[
+                                        classes.actionsTd,
+                                    ]}
+                                    customClassesForCells={[1]}
+                                />
+                                {
+                                    this.state.completed ? (
+                                        <div>
+                                            <h4>Completed <Muted>({this.props.completed.length})</Muted></h4>
+                                            <Table
+                                                tableHead={[
+                                                    'Todo',
+                                                    'Completed at',
+                                                    'Un-complete'
+                                                ]}
+                                                tableData={this.renderComplete()}
+                                                customCellClasses={[
+                                                    classes.textRight
+                                                ]}
+                                                customClassesForCells={[2]}
+                                            />
+                                        </div>
+                                    ) : null
+                                }
+                            </div>
+                        ) : null}
                     </CardBody>
                 </Card>
             </div>
@@ -235,6 +247,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 CategoryDisplay.propTypes = {
+    show: PropTypes.bool.isRequired,
     pad: PropTypes.bool,
     classes: PropTypes.object,
     focus: PropTypes.string,

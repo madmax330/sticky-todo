@@ -56,6 +56,7 @@ class TodoDisplay extends Component {
             return (
                 <CategoryDisplay
                     pad={false}
+                    show={true}
                     category={category}
                     todos={this.props.todos[category.id] ? this.props.todos[category.id] : []}
                     completed={this.props.completed[category.id] ? this.props.completed[category.id] : []}
@@ -82,6 +83,7 @@ class TodoDisplay extends Component {
                             return (
                                 <CategoryDisplay
                                     pad={key>0}
+                                    show={false}
                                     category={this.props.categories[cat]}
                                     todos={this.props.todos[cat] ? this.props.todos[cat] : []}
                                     completed={this.props.completed[cat] ? this.props.completed[cat] : []}
@@ -106,6 +108,7 @@ class TodoDisplay extends Component {
                 return (
                     <CategoryDisplay
                         pad={key>0}
+                        show={key === 0}
                         category={this.props.categories[cat]}
                         todos={this.props.todos[cat] ? this.props.todos[cat] : []}
                         completed={this.props.completed[cat] ? this.props.completed[cat] : []}
