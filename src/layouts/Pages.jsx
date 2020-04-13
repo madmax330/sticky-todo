@@ -90,7 +90,7 @@ class Login extends React.Component {
                                 </div>
                                 <div className={classes.right}>
                                     &copy; {1900 + new Date().getYear()} , created by{" "}
-                                    <a href="https://www.bossoftwaresolutions.com">Boss Software Solutions</a>
+                                    Maxence Coulibaly
                                 </div>
                             </div>
                         }

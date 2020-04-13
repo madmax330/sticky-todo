@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { completeTodo, deleteTodo, setEditTodo, setEditCategory, deleteCategory, uncompleteTodo } from "../actions/todo";
-import { EMPTY_TODO } from "../reducers/todo";
-import { setFocus } from "../actions/status";
+import {connect} from 'react-redux';
+import {completeTodo, deleteTodo, setEditTodo, setEditCategory, deleteCategory, uncompleteTodo} from "../actions/todo";
+import {EMPTY_TODO} from "../reducers/todo";
+import {setFocus} from "../actions/status";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/core
@@ -44,62 +44,39 @@ class CategoryDisplay extends Component {
     };
 
     moreClicked = item => {
-        if(item === 'Edit') {
+        if (item === 'Edit') {
             this.props.setEditCategory(this.props.category);
-        }  else if(item === 'Delete') {
+        } else if (item === 'Delete') {
             this.props.deleteCategory(this.props.category.id);
         }
     };
 
     renderTodos() {
-        return this.props.todos.map((todo, key) => {
+        return this.props.todos.map((todo) => {
             return [
                 todo.todo,
                 [
                     (
-                        <Tooltip
-                            key={0}
-                            id="complete-todo"
-                            title="Complete todo"
-                            placement="top"
-                            classes={{ tooltip: this.props.classes.tooltip }}
-                        >
-                            <Button simple justIcon color="success" onClick={() => {
-                                this.props.completeTodo(todo);
-                            }}>
-                                <Check />
-                            </Button>
-                        </Tooltip>
+                        <Button key={0} simple justIcon color="success" onClick={() => {
+                            this.props.completeTodo(todo);
+                        }}>
+                            <Check/>
+                        </Button>
                     ),
                     (
-                        <Tooltip
-                            key={1}
-                            id="edit-todo"
-                            title="Edit todo"
-                            placement="top"
-                            classes={{ tooltip: this.props.classes.tooltip }}
-                        >
-                            <Button simple justIcon color="info" onClick={() => {
-                                this.props.setEditTodo(todo);
-                            }}>
-                                <Edit />
-                            </Button>
-                        </Tooltip>
+
+                        <Button key={1} simple justIcon color="info" onClick={() => {
+                            this.props.setEditTodo(todo);
+                        }}>
+                            <Edit/>
+                        </Button>
                     ),
                     (
-                        <Tooltip
-                            key={2}
-                            id="delete-todo"
-                            title="Delete todo"
-                            placement="top"
-                            classes={{ tooltip: this.props.classes.tooltip }}
-                        >
-                            <Button simple justIcon color="danger" onClick={() => {
-                                this.props.deleteTodo(todo);
-                            }}>
-                                <Trash />
-                            </Button>
-                        </Tooltip>
+                        <Button key={2} simple justIcon color="danger" onClick={() => {
+                            this.props.deleteTodo(todo);
+                        }}>
+                            <Trash/>
+                        </Button>
                     )
                 ]
             ]
@@ -117,12 +94,12 @@ class CategoryDisplay extends Component {
                         id="revive-todo"
                         title="Un-complete"
                         placement="top"
-                        classes={{ tooltip: this.props.classes.tooltip }}
+                        classes={{tooltip: this.props.classes.tooltip}}
                     >
                         <Button simple justIcon color="danger" onClick={() => {
                             this.props.uncompleteTodo(todo);
                         }}>
-                            <Refresh />
+                            <Refresh/>
                         </Button>
                     </Tooltip>
                 )
@@ -135,7 +112,7 @@ class CategoryDisplay extends Component {
         return (
             <div>
                 {this.props.pad ? (
-                    <div className={classes.space} />
+                    <div className={classes.space}/>
                 ) : null}
                 <Card>
                     <CardHeader color={this.props.category.color}>
@@ -160,7 +137,7 @@ class CategoryDisplay extends Component {
                         <h3>
                             {this.props.category.name}
                             <Button color={this.props.category.color} size="sm" round onClick={() => {
-                                if(this.props.focus) {
+                                if (this.props.focus) {
                                     this.props.setFocus(null);
                                 } else {
                                     this.props.setFocus(this.props.category.id);
@@ -184,7 +161,9 @@ class CategoryDisplay extends Component {
                                 <span>
                                     <Success>Completed <Muted>({this.props.completed.length})</Muted></Success>
                                 </span>
-                                <Button color="secondary" onClick={() => {this.showCompleted()}} className={classes.floatRight}>
+                                <Button color="secondary" onClick={() => {
+                                    this.showCompleted()
+                                }} className={classes.floatRight}>
                                     {this.state.completed ? "Hide completed" : "Show completed"}
                                 </Button>
                             </GridItem>

@@ -30,25 +30,23 @@ class CustomDropdown extends React.Component {
     }
 
     handleClick = () => {
-        this.setState(state => ({open: !state.open}));
+        this.setState(state => ({ open: !state.open }));
     };
     handleClose = event => {
         if (this.anchorEl.contains(event.target)) {
             return;
         }
 
-        this.setState({open: false});
+        this.setState({ open: false });
     };
-
     handleCloseMenu(param) {
-        this.setState({open: false});
+        this.setState({ open: false });
         if (this.props && this.props.onClick) {
             this.props.onClick(param);
         }
     }
-
     render() {
-        const {open} = this.state;
+        const { open } = this.state;
         const {
             classes,
             buttonText,
@@ -96,12 +94,15 @@ class CustomDropdown extends React.Component {
                                 className={classes.dropdownDividerItem}
                             />
                         );
-                    } else if (prop.ref === "multi") {
+                    } else if (
+                        prop.props !== undefined &&
+                        prop.props["data-ref"] === "multi"
+                    ) {
                         return (
                             <MenuItem
                                 key={key}
                                 className={dropdownItem}
-                                style={{overflow: "visible", padding: 0}}
+                                style={{ overflow: "visible", padding: 0 }}
                             >
                                 {prop}
                             </MenuItem>
@@ -133,10 +134,10 @@ class CustomDropdown extends React.Component {
                         onClick={this.handleClick}
                     >
                         {buttonIcon !== undefined ? (
-                            <this.props.buttonIcon className={classes.buttonIcon}/>
+                            <this.props.buttonIcon className={classes.buttonIcon} />
                         ) : null}
                         {buttonText !== undefined ? buttonText : null}
-                        {caret ? <b className={caretClasses}/> : null}
+                        {caret ? <b className={caretClasses} /> : null}
                     </Button>
                 </div>
                 <Popper
@@ -151,21 +152,21 @@ class CustomDropdown extends React.Component {
                         [classes.pooperNav]: open && navDropdown
                     })}
                 >
-                    {({TransitionProps, placement}) => (
+                    {() => (
                         <Grow
                             in={open}
                             id="menu-list"
                             style={
                                 dropup
-                                    ? {transformOrigin: "0 100% 0"}
-                                    : {transformOrigin: "0 0 0"}
+                                    ? { transformOrigin: "0 100% 0" }
+                                    : { transformOrigin: "0 0 0" }
                             }
                         >
                             <Paper className={classes.dropdown}>
                                 {innerDropDown ? (
                                     dropDownMenu
                                 ) : (
-                                    <ClickAwayListener onClickAway={this.handleClose} ref="cacat">
+                                    <ClickAwayListener onClickAway={this.handleClose}>
                                         {dropDownMenu}
                                     </ClickAwayListener>
                                 )}
@@ -193,11 +194,10 @@ CustomDropdown.propTypes = {
         "success",
         "warning",
         "danger",
-        "rose",
-        "white"
+        "rose"
     ]),
     buttonText: PropTypes.node,
-    buttonIcon: PropTypes.func,
+    buttonIcon: PropTypes.object,
     dropdownList: PropTypes.array,
     buttonProps: PropTypes.object,
     dropup: PropTypes.bool,
